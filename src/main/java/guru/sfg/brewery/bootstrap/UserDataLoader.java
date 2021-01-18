@@ -14,6 +14,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,6 +32,7 @@ public class UserDataLoader implements CommandLineRunner {
 
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     @Override
     public void run(String... args) {
         if (authorityRepository.count() == 0)
@@ -93,7 +95,7 @@ public class UserDataLoader implements CommandLineRunner {
 
         log.info("Users loaded : "       + userRepository.count());
         log.info("Authorities loaded : " + authorityRepository.count());
-        log.info("Roles loaded : "       + authorityRepository.count());
+        log.info("Roles loaded : "       + roleRepository.count());
 
     }
 }
