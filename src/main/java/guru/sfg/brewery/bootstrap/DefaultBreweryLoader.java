@@ -16,13 +16,22 @@
  */
 package guru.sfg.brewery.bootstrap;
 
+import guru.sfg.brewery.config.SecurityConfig;
 import guru.sfg.brewery.domain.*;
+import guru.sfg.brewery.domain.security.Authority;
+import guru.sfg.brewery.domain.security.User;
 import guru.sfg.brewery.repositories.*;
+import guru.sfg.brewery.repositories.security.AuthorityRepository;
+import guru.sfg.brewery.repositories.security.UserRepository;
+import guru.sfg.brewery.security.SfgPasswordEncoderFactories;
 import guru.sfg.brewery.web.model.BeerStyleEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -45,11 +54,13 @@ public class DefaultBreweryLoader implements CommandLineRunner {
     private final BeerOrderRepository beerOrderRepository;
     private final CustomerRepository customerRepository;
 
+
     @Override
     public void run(String... args) {
         loadBreweryData();
         loadCustomerData();
     }
+
 
     private void loadCustomerData() {
         Customer tastingRoom = Customer.builder()
